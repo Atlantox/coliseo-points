@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="tiny_coliseum.jpg">
+    <title>Coliseo - Calculadora de puntos</title>
+    <style>
+        h1, h2, h3, h4, h5, h6{
+            margin:0;
+            padding: 0;
+        }
+
+        body{
+            
+            background-color: rgb(182, 182, 182);
+            margin:0;
+            padding:0;
+            width:100vw;
+            height:100vh;
+            color:white;
+        }
+
+        .player-container{
+            width:50vw;
+            height:50vh;    
+            margin:0;
+            padding:0;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            flex-wrap: wrap;
+            align-content: center;
+        }
+
+        .content-rotated{
+            width:49vh;
+            height:49vw;
+            border-radius: 5px;
+            background:#8752a2;
+            transform-origin:center;
+        }
+
+        .content-left{
+            transform:rotate(90deg);
+        }
+
+        .content-right{    
+            transform:rotate(-90deg);
+        }
+
+        .panel{
+            padding: 0 10px;
+        }
+
+        .btn{
+            background-color: white;
+            border: solid black 0.5px;
+            padding:8px 0;
+            border-radius: 5px;
+        }
+
+        .btn-symbols{
+            font-size: 25px;
+            padding:0;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        h2, h3{
+            text-align: center;
+        }
+
+        .w-100{ width:100% ;}
+        .w-50{ width:50%; }
+        .h-100{ height:100%; }
+
+        .flex-center{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .flex-wrap{
+            flex-wrap:wrap;
+        }
+
+        .animate{
+            transition:0.5s;
+        }
+
+        .fw-bold{
+            font-weight: bold;
+        }
+
+        .checked{
+            background-color: rgb(140, 214, 152);
+        }
+
+        .kills{ 
+            text-align: right; 
+            padding:0 5px; 
+        }
+    </style>
+</head>
+<body>
+    <main class="flex-center flex-wrap w-100 h-100">
+
+        <div class="player-container flex-center">
+            <div class="content-rotated content-left player-content flex-center flex-wrap">
+                <h2 class="w-100">Jugador 1</h2>
+                <h2 id="p1-points" class="w-100">0.00</h2>
+                <div class="panel w-100 flex-center flex-wrap">
+                    <div class="w-50 flex-center">
+                        <span class="w-100 fw-bold kills">
+                            <span id="p1-kills">0</span>
+                            KILLS                                
+                        </span>
+                        <button class="w-50 btn fw-bold btn-symbols" onclick="ModifyPlayerKills(1, -1)">-</button>
+                        <button class="w-50 btn fw-bold btn-symbols" onclick="ModifyPlayerKills(1, 1)">+</button>
+                    </div>
+                    <button class="w-50 btn fw-bold" onclick="TogglePlayerSlayed(1, this)">ASESINADO</button>
+                    <button class="w-50 btn fw-bold" onclick="TogglePlayerSuicide(1, this)">SUICIDIO</button>
+                    <button class="w-50 btn fw-bold" onclick="TogglePlayerEmptySlot(1, this)">VACÍO</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="player-container flex-center">
+            <div class="content-rotated content-right player-content flex-center flex-wrap">
+                <h2 class="w-100">Jugador 2</h2>
+                <h2 id="p2-points" class="w-100">0.00</h2>
+                <div class="panel w-100 flex-center flex-wrap">
+                    <div class="w-50 flex-center">
+                        <span class="w-100 fw-bold kills">
+                            <span id="p2-kills">0</span>
+                            KILLS                                
+                        </span>
+                        <button class="w-50 btn fw-bold btn-symbols" onclick="ModifyPlayerKills(2, -1)">-</button>
+                        <button class="w-50 btn fw-bold btn-symbols" onclick="ModifyPlayerKills(2, 1)">+</button>
+                    </div>
+                    <button class="w-50 btn fw-bold" onclick="TogglePlayerSlayed(2, this)">ASESINADO</button>
+                    <button class="w-50 btn fw-bold" onclick="TogglePlayerSuicide(2, this)">SUICIDIO</button>
+                    <button class="w-50 btn fw-bold" onclick="TogglePlayerEmptySlot(2, this)">VACÍO</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="player-container flex-center">
+            <div class="content-rotated content-left player-content flex-center flex-wrap">
+                <h2 class="w-100">Jugador 3</h2>
+                <h2 id="p3-points" class="w-100">0.00</h2>
+                <div class="panel w-100 flex-center flex-wrap">
+                    <div class="w-50 flex-center">
+                        <span class="w-100 fw-bold kills">
+                            <span id="p3-kills">0</span>
+                            KILLS                                
+                        </span>
+                        <button class="w-50 btn fw-bold btn-symbols" onclick="ModifyPlayerKills(3, -1)">-</button>
+                        <button class="w-50 btn fw-bold btn-symbols" onclick="ModifyPlayerKills(3, 1)">+</button>
+                    </div>
+                    <button class="w-50 btn fw-bold" onclick="TogglePlayerSlayed(3, this)">ASESINADO</button>
+                    <button class="w-50 btn fw-bold" onclick="TogglePlayerSuicide(3, this)">SUICIDIO</button>
+                    <button class="w-50 btn fw-bold" onclick="TogglePlayerEmptySlot(3, this)">VACÍO</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="player-container flex-center">
+            <div class="content-rotated content-right player-content flex-center flex-wrap">
+                <h2 class="w-100">Jugador 4</h2>
+                <h2 id="p4-points" class="w-100">0.00</h2>
+                <div class="panel w-100 flex-center flex-wrap">
+                    <div class="w-50 flex-center">
+                        <span class="w-100 fw-bold kills">
+                            KILLS                                
+                            <span id="p4-kills">0</span>
+                        </span>
+                        <button class="w-50 btn fw-bold btn-symbols" onclick="ModifyPlayerKills(4, -1)">-</button>
+                        <button class="w-50 btn fw-bold btn-symbols" onclick="ModifyPlayerKills(4, 1)">+</button>
+                    </div>
+                    <button class="w-50 btn fw-bold" onclick="TogglePlayerSlayed(4, this)">ASESINADO</button>
+                    <button class="w-50 btn fw-bold" onclick="TogglePlayerSuicide(4, this)">SUICIDIO</button>
+                    <button class="w-50 btn fw-bold" onclick="TogglePlayerEmptySlot(4, this)">VACÍO</button>
+                </div>
+            </div>
+        </div>
+
+    </main>
+    <script>
+        const players = []
+        const KILL_FACTOR = 1 // Points per kills
+
+        let left_points = 5
+
+        for (let i = 1; i < 5; i++) {
+            players.push({
+                id: i, 
+                points:0, 
+                kills:0,
+                active:true,
+                alive:true,
+            })
+        }
+
+        UpdatePoints()
+
+        function UpdateLeftPoints(quantity){
+            left_points += quantity
+        }
+
+        function ModifyPlayerKills(playerId, kills){
+            var targetPlayer = players[playerId - 1]  
+            if(targetPlayer.active === false) return
+            targetPlayer.kills += kills    
+            UpdatePoints()
+        }
+
+        function TogglePlayerSlayed(playerId, btn){    
+            var targetPlayer = players[playerId - 1]
+            if(targetPlayer.active === false) return
+
+            targetPlayer.alive = !targetPlayer.alive
+
+            if(targetPlayer.alive)
+                UpdateLeftPoints(1)
+            else
+                UpdateLeftPoints(-1)
+            
+            UpdatePoints()
+            ToggleButton(btn)
+        }
+
+        function TogglePlayerSuicide(playerId, btn){    
+            var targetPlayer = players[playerId - 1]
+            if(targetPlayer.active === false) return
+            targetPlayer.alive = !targetPlayer.alive
+
+            UpdatePoints()
+            ToggleButton(btn)
+        }
+
+        function TogglePlayerEmptySlot(playerId, btn){
+            var targetPlayer = players[playerId - 1]
+            targetPlayer.active = !targetPlayer.active
+
+            if(targetPlayer.active)
+                targetPlayer.alive = true
+            else
+                targetPlayer.alive = false
+            
+            UpdatePoints()
+            ToggleButton(btn)
+        }
+
+        function UpdatePoints(){
+            var alivePlayers = 0
+
+            players.forEach((player) => {
+                if(player.alive)
+                    alivePlayers ++
+            })
+
+            var equitative_points = 0
+            if(left_points > 0 && alivePlayers > 0){
+                equitative_points = parseFloat(left_points / alivePlayers)
+            }
+
+            players.forEach((player) => {
+                player.points = (player.kills * KILL_FACTOR)
+                if(player.alive){
+                    player.points += equitative_points
+                }
+            })
+
+            UpdateDOM()
+        }
+
+        function UpdateDOM(){
+            players.forEach((player) => {
+                if(player.active){
+                    document.getElementById('p' + player.id + '-points').innerHTML = player.points.toFixed(2)
+                    document.getElementById('p' + player.id + '-kills').innerHTML = player.kills
+                }
+                else{
+                    document.getElementById('p' + player.id + '-points').innerHTML = 'X'
+                    document.getElementById('p' + player.id + '-kills').innerHTML = 0
+                }
+            })
+        }
+
+        function ToggleButton(btn){
+            if(btn.classList.contains('checked'))
+                btn.classList.remove('checked')
+            else
+                btn.classList.add('checked')
+        }
+    </script>
+</body>
+</html>
